@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{mainLayout.html}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script >
+		$(document).ready(function(){
+			var $className = $('#className');
+			var $numberOfStudent = $('#numberOfStudent');
+			
+			$("#save").click(function(){
+				var input = {
+						className: $className.val(),
+						numberOfStudent: $numberOfStudent.val(),
+				}
+				$.ajax({
+					type: 'POST',
+					contentType: "application/json",
+					url: "http://localhost:8080/class",
+					headers:{
+						"content-Type": "application/json"
+					},
+	                data: JSON.stringify(input),
+	                dataType: 'json',
+	                success: function(data) {
+	                    alert("success");
+	                },
+	                error: function(){
+	                	alert('error');
+	                }
+	            });
+			});	
+		});
+	</script>
+</head>
+<body>
+	<div class="content" layout:fragment="content">
+		<form class="row g-3" style="padding: 20px" >
+			<div class="col-12">
+				<label for="inputClassName" class="form-label">Class Name</label> <input  
+					type="text" class="form-control" id="className">
+			</div>
+			<div class="col-12">
+				<label for="inputNumberOfStudent" class="form-label">Number Of Student</label> <input 
+					type="text" class="form-control" id="numberOfStudent">
+			</div>
+
+			<div class="col-12">
+				<button type="submit" id="save" class="btn btn-primary">Save</button>
+				<a th:href="@{/view-class}"><button type="button" class="btn btn-primary">Reset</button></a>
+			</div>
+		</form>
+	</div>
+	
+	
+</body>
+</html>

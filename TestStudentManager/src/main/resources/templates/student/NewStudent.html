@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{mainLayout.html}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script >
+		$(document).ready(function(){
+			var $fullName = $('#FullName');
+			var $address = $('#Address');
+			var $dateOfBirth = $('#DateOfBirth');
+			var $phone = $('#phone');
+			var $gender = $('#gender');
+			var $className = $('#className');
+			$("#save").click(function(){
+				var input = {
+						fullName: $fullName.val(),
+						address: $address.val(),
+						dateOfBirth: $dateOfBirth.val(),
+						phone: $phone.val(),
+						gender: $('input[name="gender"]:checked').val(),
+						className:  $className.val()
+				}
+				$.ajax({
+					type: 'POST',
+					contentType: "application/json",
+					url: "http://localhost:8080/student",
+					headers:{
+						"content-Type": "application/json"
+					},
+	                data: JSON.stringify(input),
+	                dataType: 'json',
+	                success: function(data) {
+	                    alert(data);
+	                },
+	                error: function(){
+	                	alert('error');
+	                }
+	            });
+			});	
+		});
+	</script>
+</head>
+<body>
+	<div class="content" layout:fragment="content">
+		<form class="row g-3" style="padding: 20px" th:object="${studentDto}" >
+			<div class="col-6">
+				<label for="inputFullName" class="form-label">Full Name</label> <input  th:field="*{fullName}"
+					type="text" class="form-control" id="FullName">
+			</div>
+			<div class="col-6">
+				<label for="inputAddress" class="form-label">Address</label> <input th:field="*{address}"
+					type="text" class="form-control" id="Address">
+			</div>
+			<div class="col-6">
+				<label for="inputDateOfBirth" class="form-label">Date Of
+					Birth</label> <input th:field="*{dateOfBirth}" type="datetime" class="form-control"
+					id="DateOfBirth" placeholder="YYYY-MM-DD">
+			</div>
+			
+			<div class="col-6">
+				<label for="inputPhone" class="form-label">Phone</label> <input th:field="*{phone}" type="text" class="form-control"
+					id="phone" >
+			</div>
+
+			<div class="col-6">
+				<label for="gender" class="form-label">Gender: </label>
+				<div class="form-check form-check-inline">
+					<input th:field="*{gender}" class="form-check-input" type="radio" value = "male" 
+						name="gender" id="gender1" >
+					<label class="form-check-label" for="inlineRadio1" >Male</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input th:field="*{gender}" class="form-check-input" type="radio" value = "female"
+						name="gender" id="gender2">
+					<label class="form-check-label" for="inlineRadio2" >Female</label>
+				</div>
+			</div>
+			<div class="col-6">
+				<label for="inputState" class="form-label">Class Name</label> 
+				<select th:field="*{className}"
+					id="className" class="form-select">
+					<option value="" selected>-Select Class--</option>
+					<option th:each="class : ${lopHoc}" th:value="${class.className}" th:text="${class.className}" >  </option>
+				</select>
+			</div>
+
+			<div class="col-12">
+				<button type="submit" id="save" class="btn btn-primary">Save</button>
+				<a th:href="@{/view-student}"><button type="button" class="btn btn-primary">Reset</button></a>
+			</div>
+		</form>
+	</div>
+	
+	
+</body>
+</html>

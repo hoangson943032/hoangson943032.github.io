@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{mainLayout.html}">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script >
+		$(document).ready(function(){
+			var $fullName = $('#FullName');
+			var $position = $('#position');
+			var $dateOfBirth = $('#DateOfBirth');
+			var $phone = $('#phone');
+			var $className = $('#className');
+			$("#save").click(function(){
+				var input = {
+						fullName: $fullName.val(),
+						position: $position.val(),
+						dateOfBirth: $dateOfBirth.val(),
+						phone: $phone.val(),
+						className:  $className.val()
+				}
+				$.ajax({
+					type: 'POST',
+					contentType: "application/json",
+					url: "http://localhost:8080/teacher",
+					headers:{
+						"content-Type": "application/json"
+					},
+	                data: JSON.stringify(input),
+	                dataType: 'json',
+	                success: function(data) {
+	                    alert(data);
+	                },
+	                error: function(){
+	                	alert('error');
+	                }
+	            });
+			});	
+		});
+	</script>
+</head>
+<body>
+	<div class="content" layout:fragment="content">
+		<form class="row g-3" style="padding: 20px" th:object="${teacherDto}" >
+			<div class="col-6">
+				<label for="inputFullName" class="form-label">Full Name</label> <input 
+					type="text" class="form-control" id="FullName">
+			</div>
+			<div class="col-6">
+				<label for="inputPosition" class="form-label">Position</label> <input 
+					type="text" class="form-control" id="position">
+			</div>
+			<div class="col-6">
+				<label for="inputDateOfBirth" class="form-label">Date Of
+					Birth</label> <input  type="datetime" class="form-control"
+					id="DateOfBirth" placeholder="YYYY-MM-DD">
+			</div>
+			
+			<div class="col-6">
+				<label for="inputPhone" class="form-label">Phone</label> <input type="text" class="form-control"
+					id="phone" >
+			</div>
+
+
+			<div class="col-12">
+				<button type="submit" id="save" class="btn btn-primary">Save</button>
+				<a th:href="@{/view-teacher}"><button type="button" class="btn btn-primary">Reset</button></a>
+			</div>
+		</form>
+	</div>
+	
+	
+</body>
+</html>

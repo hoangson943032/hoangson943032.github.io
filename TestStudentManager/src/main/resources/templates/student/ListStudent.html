@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1" />
+<title>View employees</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+			$.getJSON("http://localhost:8080/student", function(data) {
+				$.each(data, function(key,value){
+					$("#listStudent").append("address: " + value.address + " / " + "phone: " + value.phone + " / " + "date of birth: " + value.dateOfBirth + " / " + "full name: " + value.fullName + " / " + "gender: " + value.gender + " / " + "class name: " + value.lopHoc + "<br>");
+				});
+			});
+	});
+</script>
+</head>
+
+<body>
+	<div id="listStudent"></div>
+</body>
+</html>

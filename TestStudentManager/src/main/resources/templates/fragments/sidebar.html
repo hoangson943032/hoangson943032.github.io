@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+
+</head>
+<body>
+	<div th:fragment="sidebar">
+		<div class="sidebar">
+			<div class="sidebar-content">
+				<div class="home">
+					<a href="#">DANH MỤC CHÍNH</a>
+				</div>
+				<button type="button" class="dropdown-btn">Quản Lý Học Sinh</button>
+				<div class="dropdown-container">
+					<a th:href="@{/view-student}">- Tạo mới thông tin học sinh</a>
+					<a th:href="@{/view-list-student}">- Danh sách thông tin học sinh</a> 
+					
+				</div>
+				<button sec:authorize="hasAuthority('ADMIN')" type="button"
+					class="dropdown-btn">Quản Lý Giáo Viên</button>
+				<div class="dropdown-container">
+					<a th:href="@{/view-teacher}">- Tạo mới thông tin giáo viên</a> 
+					<a th:href="@{/view-list-teacher}">- Danh sách thông tin giáo viên</a> 
+					
+				</div>
+
+				<button type="button" class="dropdown-btn">Quản Lý Lớp Học</button>
+				<div class="dropdown-container">
+					<a th:href="@{/view-class}">- Tạo lớp học</a> 
+					<a th:href="@{/view-list-class}">- Danh sách thông tin lớp học</a>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</body>
+</html>
